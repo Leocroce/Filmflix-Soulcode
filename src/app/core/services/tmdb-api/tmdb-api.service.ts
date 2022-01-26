@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+
 import { MovieTvBase } from '../../models/movie-tv-base';
 
 type ApiResponse = {page: number, results: MovieTvBase[]};
@@ -33,5 +34,11 @@ export class TmdbApiService {
         query
       }
     }).pipe(map((data) => data.results));
+  }
+
+  getDetailById(id: number, type: 'movie' | 'tv'): Observable<MovieTvBase> {
+    return this.http.get<MovieTvBase>(`${this.baseUrl}/${type}/${id}`, {
+      params: this.options,
+    });
   }
 }
